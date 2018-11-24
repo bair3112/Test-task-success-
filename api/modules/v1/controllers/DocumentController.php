@@ -29,8 +29,8 @@ class DocumentController extends Controller
            ->limit($pagination->limit)
            ->all();
 
-      /* return $this->render('index', [
-           'document' => $documents,
+       /*return $this->render('index.php', [
+           'documents' => $documents,
            'pagination' => $pagination,
        ]);*/
       return $documents;
@@ -66,6 +66,20 @@ class DocumentController extends Controller
     }
 
     /**
+     * Публикация документа
+     * @param $id
+     */
+    public function actionPublication($id){
+        $document = Document::findOne($id);
+        if($document->status === self::STATUS_DRAFT){
+            $document->status = self::STATUS_PUBLISHED;
+        }elseif ($document->status === self::STATUS_PUBLISHED){
+            return 'Ошибка при публикации документа';
+        }
+        return $document->save(false) ? 'Документ опубликован' : 'Ошибка при публикации документа';
+    }
+
+    /**
      * @return array
      */
     protected function verbs()
@@ -74,6 +88,7 @@ class DocumentController extends Controller
             'index' => ['get'],
             'view' => ['get'],
             'create' => ['post'],
+            'publication' => ['post']
         ];
     }
 }
