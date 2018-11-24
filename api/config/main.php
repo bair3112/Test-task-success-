@@ -46,11 +46,18 @@ return [
         ],
         'urlManager' => [
             'enablePrettyUrl' => true,
-            'enableStrictParsing' => false,
+            'enableStrictParsing' => true,
             'showScriptName' => false,
             'rules' => [
+                'GET api/v1/document' => 'v1/document/index',
+                'api/v1/document' => 'v1/document/create',
+                'api/v1/document/<id:[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}>' => 'v1/document/view'
+               // '/' => 'index.php',
               //  ['class' => 'yii\rest\UrlRule', 'controller' => 'document'],
-                'document' => 'document/create',
+             //  'document' => 'index.php/v1/document/index',
+              //  'documents' => 'v1/document/create',
+              //  'document/<id:\d+>' => 'index.php/v1/document/view',
+              //  'document/<id:\d+>' => 'index.php/v1/document/view',
             ],
         ]
 

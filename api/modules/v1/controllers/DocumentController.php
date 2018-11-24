@@ -4,6 +4,7 @@ namespace api\modules\v1\controllers;
 
 use app\models\Document;
 use Ramsey\Uuid\Uuid;
+use yii\data\Pagination;
 use yii\rest\ActiveController;
 use yii\rest\Controller;
 /**
@@ -16,9 +17,30 @@ class DocumentController extends Controller
     public const STATUS_PUBLISHED = 'published';
 
    public function actionIndex(){
-        return 'api';
+       $query = Document::find();
+
+       $pagination = new Pagination([
+           'defaultPageSize' => 5,
+           'totalCount' => $query->count(),
+       ]);
+
+       $documents = $query->orderBy('id')
+           ->offset($pagination->offset)
+           ->limit($pagination->limit)
+           ->all();
+
+      /* return $this->render('index', [
+           'document' => $documents,
+           'pagination' => $pagination,
+       ]);*/
+      //return $this->;
     }
 
+    /**
+     * Создаётся пустой черновик
+     * @return Document
+     * @throws \Exception
+     */
     public function actionCreate(){
        $model = new Document();
        $model->id = (Uuid::uuid4()->toString());
@@ -35,10 +57,22 @@ class DocumentController extends Controller
         return $model;
     }
 
+    /**
+     * @param $id
+     * @return Document|null|string
+     */
+    public function actionView($id){
+     return  Document::findOne($id) ?  Document::findOne($id) : 'Документ не найден.';
+    }
+
+    /**
+     * @return array
+     */
     protected function verbs()
     {
         return [
             'index' => ['get'],
+            'view' => ['get'],
             'create' => ['post'],
         ];
     }
