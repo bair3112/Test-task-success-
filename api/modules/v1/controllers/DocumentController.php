@@ -33,7 +33,7 @@ class DocumentController extends Controller
            'document' => $documents,
            'pagination' => $pagination,
        ]);*/
-      //return $this->;
+      return $documents;
     }
 
     /**
