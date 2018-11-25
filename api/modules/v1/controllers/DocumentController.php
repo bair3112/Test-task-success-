@@ -4,6 +4,7 @@ namespace api\modules\v1\controllers;
 
 use Ramsey\Uuid\Uuid;
 use yii\data\Pagination;
+use yii\data\Sort;
 use yii\rest\Controller;
 use app\models\Document;
 /**
@@ -18,25 +19,28 @@ class DocumentController extends Controller
     
     
 
-   public function actionIndex(){
+   public function actionIndex()
+   {
        $query = Document::find();
        $pagination = new Pagination([
-           'defaultPageSize' => \Yii::$app->request->bodyParams,
+           'page' =>  \Yii::$app->request->get('page'),
+           'defaultPageSize' => \Yii::$app->request->get('perPage'),
            'totalCount' => $query->count(),
        ]);
+
        $documets = $query->orderBy('id')
            ->offset($pagination->offset)
            ->limit($pagination->limit)
            ->all();
-      return [
-        'documents' => $documets,
-          'pagination' => [
-              "page" => $pagination->page,
-              "perPage" => 3,
-              "total" => 1
-          ]
-      ];
-    }
+       return [
+           'documents' => $documets,
+           'pagination' => [
+               "page" => $pagination->page,
+               "perPage" => $pagination->defaultPageSize,
+               "total" => $pagination->totalCount
+           ],
+       ];
+   }
 
     /**
      * Создаётся пустой черновик
