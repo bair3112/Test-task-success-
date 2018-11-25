@@ -4,7 +4,6 @@ namespace api\modules\v1\controllers;
 
 use Ramsey\Uuid\Uuid;
 use yii\data\Pagination;
-use yii\data\Sort;
 use yii\rest\Controller;
 use app\models\Document;
 /**
@@ -33,7 +32,7 @@ class DocumentController extends Controller
            ->limit($pagination->limit)
            ->all();
        return [
-           'documents' => $documets,
+           'document' => $documets,
            'pagination' => [
                "page" => $pagination->page,
                "perPage" => $pagination->defaultPageSize,
@@ -42,11 +41,6 @@ class DocumentController extends Controller
        ];
    }
 
-    /**
-     * Создаётся пустой черновик
-     * @return Document
-     * @throws \Exception
-     */
     public function actionCreate(){
        $document = new Document();
 
@@ -62,7 +56,9 @@ class DocumentController extends Controller
         }
          $document->save(false);
 
-        return $document;
+        return [
+            'document' => $document
+        ];
     }
 
     /**
@@ -70,14 +66,17 @@ class DocumentController extends Controller
      * @return Document|null|string
      */
     public function actionView($id){
+        $document = Document::findOne($id);
+        if($document){
+            return $document;
+        }
+        elseif (\Yii::$app->response->statusCodeByException){
+            throw new yii\web\BadRequestHttpException;
+        }
      return  Document::findOne($id) ?  Document::findOne($id) : 'Документ не найден.';
     }
 
-    /**
-     * Публикация документа
-     * @param $id
-     * @return string
-     */
+
     public function actionPublication($id){
         $document = Document::findOne($id);
         if($document->status === self::STATUS_DRAFT){
@@ -85,13 +84,17 @@ class DocumentController extends Controller
         }elseif ($document->status === self::STATUS_PUBLISHED){
             return 'Ошибка при публикации документа';
         }
-        return $document->save(false) ? 'Документ опубликован' : 'Ошибка при публикации документа';
+
+        if($document->save(false))
+            return [
+                'document' => $document
+            ];
+        else{
+            return  'Ошибка при публикации документа';
+        }
     }
 
-    /**
-     * @param $id
-     * @return Document|null|string
-     */
+
     public function actionUpdate($id){
         $document = Document::findOne($id);
         if($document->status === self::STATUS_DRAFT){
@@ -99,7 +102,9 @@ class DocumentController extends Controller
             $document->payload = $data;
             $document->modifyAt = (new \DateTime())->format(DATE_ATOM);
             $document->save(false);
-            return $document;
+            return [
+                'document' => $document
+            ];
         }else if ($document->status === self::STATUS_PUBLISHED){
             return 'Ошибка редактирования';
         }
