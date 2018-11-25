@@ -2,11 +2,10 @@
 
 namespace api\modules\v1\controllers;
 
-use app\models\Document;
 use Ramsey\Uuid\Uuid;
 use yii\data\Pagination;
-use yii\rest\ActiveController;
 use yii\rest\Controller;
+use app\models\Document;
 /**
  * Default controller for the `v1` module
  */
@@ -15,25 +14,28 @@ class DocumentController extends Controller
 {
     public const STATUS_DRAFT = 'draft';
     public const STATUS_PUBLISHED = 'published';
+    
+    
+    
 
    public function actionIndex(){
        $query = Document::find();
-
        $pagination = new Pagination([
-           'defaultPageSize' => 5,
+           'defaultPageSize' => \Yii::$app->request->bodyParams,
            'totalCount' => $query->count(),
        ]);
-
-       $documents = $query->orderBy('id')
+       $documets = $query->orderBy('id')
            ->offset($pagination->offset)
            ->limit($pagination->limit)
            ->all();
-
-       /*return $this->render('index.php', [
-           'documents' => $documents,
-           'pagination' => $pagination,
-       ]);*/
-      return $documents;
+      return [
+        'documents' => $documets,
+          'pagination' => [
+              "page" => $pagination->page,
+              "perPage" => 3,
+              "total" => 1
+          ]
+      ];
     }
 
     /**
@@ -42,19 +44,21 @@ class DocumentController extends Controller
      * @throws \Exception
      */
     public function actionCreate(){
-       $model = new Document();
-       $model->id = (Uuid::uuid4()->toString());
-       $model->status = self::STATUS_DRAFT;
-       $model->payload = "{ }";
-       $model->createAt = (new \DateTime())->format(DATE_ATOM);
-        if($model->status == self::STATUS_PUBLISHED){
-            $model->modifyAt = (new \DateTime())->format(\DATE_ATOM);
+       $document = new Document();
+
+       $document->id = (Uuid::uuid4()->toString());
+       $document->status = self::STATUS_DRAFT;
+       $document->payload = "{ }";
+       $document->createAt = (new \DateTime())->format(DATE_ATOM);
+        if($document->status == self::STATUS_PUBLISHED){
+            $document->modifyAt = (new \DateTime())->format(\DATE_ATOM);
         }
-        else if($model->status == self::STATUS_DRAFT){
-            $model->modifyAt = null;
+        else if($document->status == self::STATUS_DRAFT){
+            $document->modifyAt = null;
         }
-         $model->save(false);
-        return $model;
+         $document->save(false);
+
+        return $document;
     }
 
     /**
@@ -68,6 +72,7 @@ class DocumentController extends Controller
     /**
      * Публикация документа
      * @param $id
+     * @return string
      */
     public function actionPublication($id){
         $document = Document::findOne($id);
@@ -80,6 +85,24 @@ class DocumentController extends Controller
     }
 
     /**
+     * @param $id
+     * @return Document|null|string
+     */
+    public function actionUpdate($id){
+        $document = Document::findOne($id);
+        if($document->status === self::STATUS_DRAFT){
+            $data = \Yii::$app->request->bodyParams['payload'];
+            $document->payload = $data;
+            $document->modifyAt = (new \DateTime())->format(DATE_ATOM);
+            $document->save(false);
+            return $document;
+        }else if ($document->status === self::STATUS_PUBLISHED){
+            return 'Ошибка редактирования';
+        }
+        return null;
+    }
+
+    /**
      * @return array
      */
     protected function verbs()
@@ -88,7 +111,8 @@ class DocumentController extends Controller
             'index' => ['get'],
             'view' => ['get'],
             'create' => ['post'],
-            'publication' => ['post']
+            'publication' => ['post'],
+            'update' => ['patch']
         ];
     }
 }

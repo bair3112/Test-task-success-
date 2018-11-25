@@ -49,11 +49,11 @@ return [
             'enableStrictParsing' => true,
             'showScriptName' => false,
             'rules' => [
-                'GET api/v1/document' => 'v1/document/index',
+                'GET api/v1/document/<page:\d+>' => 'v1/document/index',
                 'api/v1/document' => 'v1/document/create',
-                'api/v1/document/<id:[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}>' => 'v1/document/view',
+                'GET api/v1/document/<id:[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}>' => 'v1/document/view',
                 'api/v1/document/<id:[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}>/publish' => 'v1/document/publication',
-
+                'api/v1/document/<id:[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}>' => 'v1/document/update',
                // '/' => 'index.php',
               //  ['class' => 'yii\rest\UrlRule', 'controller' => 'document'],
              //  'document' => 'index.php/v1/document/index',
