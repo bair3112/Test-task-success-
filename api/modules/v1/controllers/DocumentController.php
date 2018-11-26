@@ -17,10 +17,6 @@ class DocumentController extends Controller
     public const STATUS_DRAFT = 'draft';
     public const STATUS_PUBLISHED = 'published';
 
-    
-    
-    
-
    public function actionIndex()
    {
        $query = Document::find();

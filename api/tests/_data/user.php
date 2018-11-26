@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'User1' =>
     [
         'username' => 'okirlin',
         'auth_key' => 'iwTNae9t34OmnK6l4vT4IeaTk-YWI2Rv',
@@ -10,6 +11,7 @@ return [
         'updated_at' => '1391885313',
         'email' => 'brady.renner@rutherford.com',
     ],
+    'User2' =>
     [
         'username' => 'troy.becker',
         'auth_key' => 'EdKfXrx88weFMV0vIxuTMWKgfK2tS3Lp',

@@ -16,7 +16,7 @@ return [
         '@npm'   => '@vendor/npm-asset',
     ],
     'controllerMap' => [
-        'fixture' => [
+        'fixtures' => [
             'class' => 'yii\console\controllers\FixtureController',
             'namespace' => 'common\fixtures',
           ],
