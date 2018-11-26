@@ -61,11 +61,6 @@ return [
                     'route' => 'v1/document/create',
                 ],
                 [
-                    'verb' => 'GET',
-                    'pattern' => 'api/v1/document/<id:[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}>',
-                    'route' => 'v1/document/view',
-                ],
-                [
                     'verb' => 'POST',
                     'pattern' => 'api/v1/document/<id:[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}>/publish',
                     'route' => 'v1/document/publication',
@@ -74,6 +69,11 @@ return [
                     'verb' => 'PATCH',
                     'pattern' => 'api/v1/document/<id:[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}>',
                     'route' => 'v1/document/update',
+                ],
+                [
+                    'verb' => ['GET', 'POST'],
+                    'pattern' => 'api/v1/document/<id:[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}>',
+                    'route' => 'v1/document/view',
                 ],
             ],
         ]
