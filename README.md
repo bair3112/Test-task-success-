@@ -2,59 +2,34 @@
     <a href="https://github.com/yiisoft" target="_blank">
         <img src="https://avatars0.githubusercontent.com/u/993323" height="100px">
     </a>
-    <h1 align="center">Yii 2 Advanced Project Template</h1>
+    <h1 align="center">Тестовое задание</h1>
     <br>
 </p>
 
-Yii 2 Advanced Project Template is a skeleton [Yii 2](http://www.yiiframework.com/) application best for
-developing complex Web applications with multiple tiers.
+Контактные данные:  
+Почта: bair3112@yandex.ru  
+<h1 align="center">Полнота выполнения тестового задания:</h1>
+Основное задание выполнено в полном объёме. Реализованы все необходимые API:
 
-The template includes three tiers: front end, back end, and console, each of which
-is a separate Yii application.
+**POST /api/v1/document/** - создаём черновик.  
+**GET /api/v1/document/{id}** - получить документ по id.  
+**PATCH /api/v1/document/{id}** - редактировать документ.   
+**POST /api/v1/document/{id}/publish** - опубликовать документ   
+**GET /api/v1/document/?page=1&perPage=20** - получить список документов с пагинацией.    
 
-The template is designed to work in a team development environment. It supports
-deploying the application in different environments.
+Из опциональных заданий, реализованы API тесты.
+
+Для запуска проекта необходимо:  
+1) Создать на своём ПК путь: D:\phproject\apistudy\www
+2) Распаковать архив "puphet.zip" находящийся в папке "Install" в корне репозитория, на диск "D:\phproject\apistudy"
+3) Поднять виртуальную машину.
+4) Скопировать данный проект в папку "www" по такому пути: D:\phproject\apistudy\www
+5) Сайт настроен на адрес: api.yii2frontend.com 
+6) Данный проект реализован в папке "api"
+7) Тестировать проект можно в программе "Postman" либо в "test RESTful Web Service" в phpstorm.
 
 Documentation is at [docs/guide/README.md](docs/guide/README.md).
 
 [![Latest Stable Version](https://img.shields.io/packagist/v/yiisoft/yii2-app-advanced.svg)](https://packagist.org/packages/yiisoft/yii2-app-advanced)
 [![Total Downloads](https://img.shields.io/packagist/dt/yiisoft/yii2-app-advanced.svg)](https://packagist.org/packages/yiisoft/yii2-app-advanced)
 [![Build Status](https://travis-ci.org/yiisoft/yii2-app-advanced.svg?branch=master)](https://travis-ci.org/yiisoft/yii2-app-advanced)
-
-DIRECTORY STRUCTURE
--------------------
-
-```
-common
-    config/              contains shared configurations
-    mail/                contains view files for e-mails
-    models/              contains model classes used in both backend and frontend
-    tests/               contains tests for common classes    
-console
-    config/              contains console configurations
-    controllers/         contains console controllers (commands)
-    migrations/          contains database migrations
-    models/              contains console-specific model classes
-    runtime/             contains files generated during runtime
-backend
-    assets/              contains application assets such as JavaScript and CSS
-    config/              contains backend configurations
-    controllers/         contains Web controller classes
-    models/              contains backend-specific model classes
-    runtime/             contains files generated during runtime
-    tests/               contains tests for backend application    
-    views/               contains view files for the Web application
-    web/                 contains the entry script and Web resources
-frontend
-    assets/              contains application assets such as JavaScript and CSS
-    config/              contains frontend configurations
-    controllers/         contains Web controller classes
-    models/              contains frontend-specific model classes
-    runtime/             contains files generated during runtime
-    tests/               contains tests for frontend application
-    views/               contains view files for the Web application
-    web/                 contains the entry script and Web resources
-    widgets/             contains frontend widgets
-vendor/                  contains dependent 3rd-party packages
-environments/            contains environment-based overrides
-```

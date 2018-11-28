@@ -9,14 +9,21 @@ use yii\rest\Controller;
 use api\models\Document;
 
 /**
- * Default controller for the `v1` module
+ * Class DocumentController
+ * @package api\modules\v1\controllers
  */
-
 class DocumentController extends Controller
 {
+    /**
+     * Допустимые статусы черновика
+     */
     public const STATUS_DRAFT = 'draft';
     public const STATUS_PUBLISHED = 'published';
 
+    /**
+     * Вывод списка документов с пагинацией
+     * @return array
+     */
    public function actionIndex()
    {
        $query = Document::find();
@@ -42,6 +49,11 @@ class DocumentController extends Controller
        ];
    }
 
+    /**
+     * Создание пустого черновика документа
+     * @return array
+     * @throws \Exception
+     */
     public function actionCreate(){
        $document = new Document();
        $contentType = Yii::$app->response->acceptMimeType;
@@ -63,6 +75,7 @@ class DocumentController extends Controller
     }
 
     /**
+     * Вывод документа по идентификатору
      * @param $id
      * @return array
      * @throws \yii\web\NotFoundHttpException
@@ -78,7 +91,11 @@ class DocumentController extends Controller
         else throw new \yii\web\NotFoundHttpException;
    }
 
-
+    /**
+     * Публикация документа
+     * @param $id
+     * @return array
+     */
     public function actionPublication($id){
         $document = Document::findOne($id);
         $contentType = Yii::$app->response->acceptMimeType;
@@ -98,6 +115,7 @@ class DocumentController extends Controller
     }
 
     /**
+     * Редактирование черновика документа
      * @param $id
      * @return array|null
      * @throws \yii\web\BadRequestHttpException
