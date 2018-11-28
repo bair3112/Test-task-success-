@@ -19,7 +19,7 @@ return [
     'document3' =>
     [
         'id' => 'cd4a055f-bc72-4cf9-9d24-25f60f676780',
-        'status' => 'publish',
+        'status' => 'published',
         'payload' => 'Good Morning',
         'createAt' => '2018-11-26T09:20:21+00:00',
         'modifyAt' => '2018-11-26T10:39:58+00:00',

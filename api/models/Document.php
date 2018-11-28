@@ -2,9 +2,6 @@
 
 namespace api\models;
 
-use Ramsey\Uuid\Uuid;
-use Yii;
-
 /**
  * This is the model class for table "document".
  *

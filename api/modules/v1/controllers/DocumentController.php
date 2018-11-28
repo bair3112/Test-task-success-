@@ -6,7 +6,7 @@ use Yii;
 use Ramsey\Uuid\Uuid;
 use yii\data\Pagination;
 use yii\rest\Controller;
-use app\models\Document;
+use api\models\Document;
 
 /**
  * Default controller for the `v1` module
@@ -95,8 +95,6 @@ class DocumentController extends Controller
                 'document' => $document
             ];
         }
-
-
     }
 
     /**
